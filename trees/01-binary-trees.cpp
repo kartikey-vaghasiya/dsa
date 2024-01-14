@@ -74,10 +74,38 @@ void postOrderDfs(Node* node){
     cout << "node : "<< node -> data << endl;
 }
 
+// params: queue<Node*> q will take default value ({new Node(0)})...
+// if value is not provided when function is called
+void levelOrderTraversal(Node* node , queue<Node*> q = queue<Node*>({new Node(-2)})) {
+
+    // adding child node to the queue
+    if(node -> left != NULL){ q.push(node -> left); }
+    if(node -> right != NULL) { q.push(node -> right);}
+    
+    // base condition
+    if(q.empty()) {return;}
+
+    // node(-2) => it's level flag
+    if(q.front() -> data == -2) {
+        q.push(new Node(-2)); // pushing node(-2) into queue that indicates...
+        // that's indicates that all nodes before node(-2) are at same level
+        q.pop(); // remove node(-2) which is at front 
+        cout<<endl; // print line so that we can diffrentiate level
+    } 
+        
+    Node* popedNode = q.front();
+    cout << "Node: " << popedNode -> data << endl;
+
+    // dequeue and call "bfsTraversal" for "popedNode" 
+    q.pop();
+    levelOrderTraversal(popedNode, q);
+}
+
 int main() {
 
     // method-1 for constructing binary trees ( manually )
     Node* root = new Node();
+
     root -> left  = new Node(1);
     root -> right = new Node(2);
 
@@ -94,16 +122,19 @@ int main() {
     root -> right -> right = new Node(-1);
 
     // method - 2 for constructing binary trees ( user input )
-    // Node* root = new Node(0);
-    // constructBinaryTree(root);
+    constructBinaryTree(root);
 
-    // dfs
+    // dfs ( depth first search )
     cout << "inorder"<< endl;
     inOrderDfs(root);
     cout << "postorder"<< endl;
     postOrderDfs(root);
     cout << "preorder"<< endl;
     preOrderDfs(root);
+
+    // level order traversal ( ~ bfs)
+    cout << "levelOrderTraversal"<<endl;
+    levelOrderTraversal(root);
 
     return 0;
 }
