@@ -53,26 +53,57 @@ Node* constructBinaryTree(Node* node) {
     return node;
 }
 
+void inOrderDfs(Node* node){
+    if ( node -> data == -1 ) { return; }
+    inOrderDfs(node -> left);
+    cout << "node : "<< node -> data << endl;
+    inOrderDfs(node -> right);
+}
+
+void preOrderDfs(Node* node){
+    if ( node -> data == -1 ) { return; }
+    cout << "node : "<< node -> data << endl;
+    preOrderDfs(node -> left);
+    preOrderDfs(node -> right);
+}
+
+void postOrderDfs(Node* node){
+    if ( node -> data == -1 ) { return; }
+    postOrderDfs(node -> left);
+    postOrderDfs(node -> right);
+    cout << "node : "<< node -> data << endl;
+}
+
 int main() {
 
-    // Method - 1
-    // Node* root = new Node();
-    // root -> left  = new Node(1);
-    // root -> right = new Node(2);
+    // method-1 for constructing binary trees ( manually )
+    Node* root = new Node();
+    root -> left  = new Node(1);
+    root -> right = new Node(2);
 
-    // root -> left -> left = new Node(11);
-    // root -> left -> right = new Node(22);
+    root -> left -> left = new Node(11);
+    root -> left -> right = new Node(22);
 
-    // cout << "root: " << root -> data << endl;
-    // cout << "left of root: " << root -> left -> data << endl;
-    // cout << "right of root: " << root -> right -> data << endl;
+    root -> left -> left -> left = new Node(-1);
+    root -> left -> left -> right = new Node(-1);
 
-    // cout << "left of left of root: " << root -> left -> left -> data << endl;
-    // cout << "right of left of root: " << root -> left -> right -> data << endl;
+    root -> left -> right -> left = new Node(-1);
+    root -> left -> right -> right = new Node(-1);
 
-    // Method - 2
-    Node* root = new Node(0);
-    constructBinaryTree(root);
+    root -> right -> left = new Node(-1);
+    root -> right -> right = new Node(-1);
+
+    // method - 2 for constructing binary trees ( user input )
+    // Node* root = new Node(0);
+    // constructBinaryTree(root);
+
+    // dfs
+    cout << "inorder"<< endl;
+    inOrderDfs(root);
+    cout << "postorder"<< endl;
+    postOrderDfs(root);
+    cout << "preorder"<< endl;
+    preOrderDfs(root);
 
     return 0;
 }
